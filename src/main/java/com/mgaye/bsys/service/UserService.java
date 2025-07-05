@@ -86,4 +86,33 @@ public class UserService {
         // Return response DTO
         return modelMapper.map(savedUser, UserResponseDto.class);
     }
+
+    public UserResponseDto createUser(UserRegistrationDto dto) {
+        if (userRepository.existsByEmail(dto.getEmail())) {
+            throw new IllegalStateException("Email already in use");
+        }
+
+        User user = new User();
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setEmail(dto.getEmail());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setPhone(dto.getPhone());
+        user.setDob(dto.getDob());
+        user.setActive(true);
+        user.setEnable(true);
+
+        // Assign default role
+        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                .orElseThrow(() -> new RoleNotFoundException("ROLE_USER not found"));
+        user.getRoles().add(userRole);
+
+        User savedUser = userRepository.save(user);
+        return UserResponseDto.fromEntity(savedUser);
+    }
+
+    // private UserResponseDto convertToDto(User user) {
+    // // Conversion logic
+    // }
+
 }

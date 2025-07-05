@@ -1,5 +1,7 @@
 package com.mgaye.bsys.dto;
 
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -32,4 +34,7 @@ public class UserRegistrationDto {
 
     @NotBlank(message = "Confirm password is required")
     private String confirmPassword;
+
+    @NotBlank(message = "Dob is required")
+    private LocalDate dob;
 }

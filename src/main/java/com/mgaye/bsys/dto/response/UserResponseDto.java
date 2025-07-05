@@ -2,6 +2,7 @@ package com.mgaye.bsys.dto.response;
 
 import lombok.Data;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
@@ -20,6 +21,7 @@ public class UserResponseDto {
     private String phone;
     private boolean active;
     private LocalDateTime createdAt;
+    private LocalDate dob;
     private Set<Role.ERole> roles;
 
     // Add this custom mapping method
@@ -32,6 +34,7 @@ public class UserResponseDto {
         dto.setPhone(user.getPhone());
         dto.setActive(user.isActive());
         dto.setCreatedAt(user.getCreatedAt());
+        dto.setDob(user.getDob());
 
         // Map roles
         Set<Role.ERole> roleNames = user.getRoles().stream()

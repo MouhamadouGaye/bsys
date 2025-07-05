@@ -11,31 +11,6 @@ import com.mgaye.bsys.model.User;
 @Configuration
 public class ModelMapperConfig {
 
-    // @Bean
-    // public ModelMapper modelMapper() {
-    // ModelMapper modelMapper = new ModelMapper();
-
-    // // Get configuration object
-    // org.modelmapper.config.Configuration config = modelMapper.getConfiguration();
-
-    // // Configure mappings
-    // config.setMatchingStrategy(MatchingStrategies.STRICT)
-    // .setFieldMatchingEnabled(true)
-    // .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
-    // .setSkipNullEnabled(true);
-
-    // // Add custom User mapping
-    // modelMapper.typeMap(UserRegistrationDto.class, User.class).addMappings(mapper
-    // -> {
-    // mapper.map(UserRegistrationDto::getFirstName, User::setFirstName);
-    // mapper.map(UserRegistrationDto::getLastName, User::setLastName);
-    // mapper.skip(User::setId);
-    // mapper.skip(User::setRoles);
-    // });
-
-    // return modelMapper;
-    // }
-
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();

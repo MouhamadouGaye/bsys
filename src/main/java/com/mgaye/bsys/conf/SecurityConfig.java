@@ -17,11 +17,13 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.mgaye.bsys.security.AuthEntryPointJwt;
-import com.mgaye.bsys.security.AuthTokenFilter;
+import com.mgaye.bsys.security.JwtAuthenticationFilter;
+// import com.mgaye.bsys.security.AuthTokenFilter;
 import com.mgaye.bsys.security.JwtTokenProvider;
 import com.mgaye.bsys.security.UserDetailsServiceImpl;
 
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,9 +45,14 @@ public class SecurityConfig {
         this.tokenProvider = tokenProvider;
     }
 
+    // @Bean
+    // public AuthTokenFilter authenticationJwtTokenFilter() {
+    // return new AuthTokenFilter(tokenProvider, userDetailsService);
+    // }
+
     @Bean
-    public AuthTokenFilter authenticationJwtTokenFilter() {
-        return new AuthTokenFilter(tokenProvider, userDetailsService);
+    public JwtAuthenticationFilter authenticationJwtTokenFilter() {
+        return new JwtAuthenticationFilter(tokenProvider, userDetailsService);
     }
 
     @Bean
@@ -72,25 +79,44 @@ public class SecurityConfig {
     // http.addFilterBefore(authenticationJwtTokenFilter(),
     // UsernamePasswordAuthenticationFilter.class);
     // return http.build();
-    // }
+    // } DO NOT DELETE COMPARE FOR BETTER SECURE APP
 
     // ... existing fields and constructor ...
+
+    // @Bean
+    // public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    // http
+    // .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+    // .csrf(csrf -> csrf.disable())
+    // .exceptionHandling(handling -> handling
+    // .authenticationEntryPoint(unauthorizedHandler))
+    // .sessionManagement(session -> session
+    // .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+    // .authorizeHttpRequests(auth -> auth
+    // .requestMatchers("/api/auth/**").permitAll()
+    // .requestMatchers("/api/public/**").permitAll()
+    // .anyRequest().authenticated());
+
+    // http.addFilterBefore(authenticationJwtTokenFilter(),
+    // UsernamePasswordAuthenticationFilter.class);
+    // return http.build();
+    // } DO NOT DELETE COMPARE FOR BETTER SECURE APP
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.disable())
-                .exceptionHandling(handling -> handling
-                        .authenticationEntryPoint(unauthorizedHandler))
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/public/**").permitAll()
+                .csrf(AbstractHttpConfigurer::disable)
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth.requestMatchers(
+                        "/api/public/**",
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated());
 
-        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authenticationJwtTokenFilter(),
+                UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 

@@ -34,7 +34,7 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) {
         createRoles();
         createAdminUser();
-        seedCurrencies();
+        // seedCurrencies();
     }
 
     private void createRoles() {
@@ -67,14 +67,14 @@ public class DataInitializer implements CommandLineRunner {
         }
     }
 
-    private void seedCurrencies() {
-        try {
-            currencyService.createCurrency("USD", "US Dollar", 2);
-            currencyService.createCurrency("EUR", "Euro", 2);
-            currencyService.createCurrency("XOF", "CFA Franc", 0);
-            currencyService.createCurrency("JPY", "Japanese Yen", 0);
-        } catch (Exception e) {
-            log.error("Currency seeding failed", e);
-        }
-    }
+    // private void seedCurrencies() {
+    // try {
+    // currencyService.createCurrency("USD", "US Dollar", 2);
+    // currencyService.createCurrency("EUR", "Euro", 2);
+    // currencyService.createCurrency("XOF", "CFA Franc", 0);
+    // currencyService.createCurrency("JPY", "Japanese Yen", 0);
+    // } catch (Exception e) {
+    // log.error("Currency seeding failed", e);
+    // }
+    // }
 }

@@ -5,12 +5,15 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mgaye.bsys.dto.UserRegistrationDto;
+import com.mgaye.bsys.dto.request.LoginRequestDto;
 import com.mgaye.bsys.dto.response.UserResponseDto;
 import com.mgaye.bsys.model.User;
 import com.mgaye.bsys.security.JwtTokenProvider;
@@ -42,7 +46,43 @@ public class PublicController {
     private final JwtTokenProvider tokenProvider;
     private final UserDetailsService userDetailsService;
 
+    @PostMapping("/login")
+    public ResponseEntity<?> authenticateUser(
+            @Valid @RequestBody LoginRequestDto loginRequest) {
+
+        try {
+            // Authenticate user
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getEmail(),
+                            loginRequest.getPassword()));
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            // Generate JWT token
+            String jwt = tokenProvider.generateToken(authentication);
+
+            // Get user details
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+            // Build response
+            Map<String, Object> response = new HashMap<>();
+            response.put("token", jwt);
+            response.put("email", userDetails.getUsername());
+            response.put("roles", userDetails.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .collect(Collectors.toList()));
+
+            return ResponseEntity.ok(response);
+
+        } catch (AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Invalid email or password");
+        }
+    }
+
     @PostMapping("/register")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> registerUser(
             @Valid @RequestBody UserRegistrationDto dto,
             HttpServletRequest request) {
