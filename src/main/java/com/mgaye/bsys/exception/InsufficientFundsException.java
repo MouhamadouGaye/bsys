@@ -8,26 +8,27 @@ import org.springframework.http.HttpStatus;
 
 // InsufficientFundsException.java
 public class InsufficientFundsException extends BankingException {
-    public InsufficientFundsException(UUID id, BigDecimal balance, BigDecimal amount) {
-        super(
-                "INSUFFICIENT_FUNDS",
-                "Insufficient funds for transaction",
-                HttpStatus.BAD_REQUEST,
-                Map.of(
-                        "accountId", id,
-                        "availableBalance", balance,
-                        "requestedAmount", amount));
-    }
+        public InsufficientFundsException(UUID id, BigDecimal balance, BigDecimal amount) {
+                super(
+                                "INSUFFICIENT_FUNDS",
+                                "Insufficient funds for transaction",
+                                HttpStatus.BAD_REQUEST,
+                                Map.of(
+                                                "accountId", id,
+                                                "availableBalance", balance,
+                                                "requestedAmount", amount));
+        }
 
-    public InsufficientFundsException(String accountNumber, BigDecimal balance, BigDecimal amount) {
-        super(
-                "INSUFFICIENT_FUNDS",
-                String.format("Insufficient funds in account %s. Balance: %s, Attempted withdrawal: %s", accountNumber,
-                        balance, amount),
-                HttpStatus.BAD_REQUEST,
-                Map.of(
-                        "accountNumber", accountNumber,
-                        "availableBalance", balance,
-                        "requestedAmount", amount));
-    }
+        public InsufficientFundsException(String accountNumber, BigDecimal balance, BigDecimal amount) {
+                super(
+                                "INSUFFICIENT_FUNDS",
+                                String.format("Insufficient funds in account %s. Balance: %s, Attempted withdrawal: %s",
+                                                accountNumber,
+                                                balance, amount),
+                                HttpStatus.BAD_REQUEST,
+                                Map.of(
+                                                "accountNumber", accountNumber,
+                                                "availableBalance", balance,
+                                                "requestedAmount", amount));
+        }
 }

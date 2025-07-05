@@ -22,28 +22,27 @@ import com.mgaye.bsys.security.JwtAuthenticationFilter;
 import com.mgaye.bsys.security.JwtTokenProvider;
 import com.mgaye.bsys.security.UserDetailsServiceImpl;
 
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+// @Configuration
+// @EnableWebSecurity
+// @EnableGlobalMethodSecurity(prePostEnabled = true)
+
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthEntryPointJwt unauthorizedHandler;
     private final JwtTokenProvider tokenProvider;
-
-    public SecurityConfig(UserDetailsServiceImpl userDetailsService,
-            AuthEntryPointJwt unauthorizedHandler,
-            JwtTokenProvider tokenProvider) {
-        this.userDetailsService = userDetailsService;
-        this.unauthorizedHandler = unauthorizedHandler;
-        this.tokenProvider = tokenProvider;
-    }
 
     // @Bean
     // public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -102,6 +101,26 @@ public class SecurityConfig {
     // return http.build();
     // } DO NOT DELETE COMPARE FOR BETTER SECURE APP
 
+    // @Bean
+    // public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    // http
+    // .csrf(AbstractHttpConfigurer::disable)
+    // .exceptionHandling(exception ->
+    // exception.authenticationEntryPoint(unauthorizedHandler))
+    // .sessionManagement(session ->
+    // session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+    // .authorizeHttpRequests(auth -> auth.requestMatchers(
+    // "/api/public/**",
+    // "/v3/api-docs/**",
+    // "/swagger-ui/**").permitAll()
+    // .anyRequest().authenticated());
+
+    // http.addFilterBefore(authenticationJwtTokenFilter(),
+    // UsernamePasswordAuthenticationFilter.class);
+
+    // return http.build();
+    // }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -112,8 +131,10 @@ public class SecurityConfig {
                         "/api/public/**",
                         "/v3/api-docs/**",
                         "/swagger-ui/**").permitAll()
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated());
 
+        // Add JWT filter before authentication processing
         http.addFilterBefore(authenticationJwtTokenFilter(),
                 UsernamePasswordAuthenticationFilter.class);
 
