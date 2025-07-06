@@ -18,22 +18,22 @@ public class BsysApplication {
 		SpringApplication.run(BsysApplication.class, args);
 	}
 
-	@Component
-	public class DataInitializer implements CommandLineRunner {
-		private final RoleRepository roleRepository;
+	// @Component
+	// public class DataInitializer implements CommandLineRunner {
+	// private final RoleRepository roleRepository;
 
-		public DataInitializer(RoleRepository roleRepository) {
-			this.roleRepository = roleRepository;
-		}
+	// public DataInitializer(RoleRepository roleRepository) {
+	// this.roleRepository = roleRepository;
+	// }
 
-		@Override
-		public void run(String... args) throws Exception {
-			// Check if roles exist, if not create them
-			if (roleRepository.findByName(ERole.ROLE_ADMIN) == null) {
-				Role adminRole = new Role("ROLE_ADMIN");
-				roleRepository.save(adminRole);
-			}
-			// ... similarly for other roles
-		}
-	}
+	// @Override
+	// public void run(String... args) throws Exception {
+	// // Check if roles exist, if not create them
+	// if (roleRepository.findByName(ERole.ROLE_ADMIN) == null) {
+	// Role adminRole = new Role("ROLE_ADMIN");
+	// roleRepository.save(adminRole);
+	// }
+	// // ... similarly for other roles
+	// }
+	// }
 }

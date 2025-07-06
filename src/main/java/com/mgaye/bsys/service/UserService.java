@@ -142,10 +142,17 @@ public class UserService {
         return convertToDto(savedUser);
     }
 
+    // private UserResponseDto convertToDto(User user) {
+    // UserResponseDto dto = modelMapper.map(user, UserResponseDto.class);
+    // dto.setRoles(user.getRoles().stream()
+    // .map(role -> role.getName().name())
+    // .collect(Collectors.toSet()));
+    // return dto;
+    // }
     private UserResponseDto convertToDto(User user) {
         UserResponseDto dto = modelMapper.map(user, UserResponseDto.class);
         dto.setRoles(user.getRoles().stream()
-                .map(role -> role.getName().name())
+                .map(Role::getName) // <-- fix: return ERole instead of String
                 .collect(Collectors.toSet()));
         return dto;
     }
