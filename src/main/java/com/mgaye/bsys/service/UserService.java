@@ -115,7 +115,7 @@ public class UserService {
     // return UserResponseDto.fromEntity(savedUser);
     // }
 
-    public UserResponseDto createUser(UserCreateDto dto) {
+    public UserResponseDto createUser(UserRegistrationDto dto) {
         // Check if email already exists
         if (userRepository.existsByEmail(dto.getEmail())) {
             throw new EmailAlreadyExistsException("Email already in use");

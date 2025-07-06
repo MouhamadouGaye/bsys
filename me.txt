@@ -1,0 +1,26 @@
+curl -X POST 'http://localhost:8080/api/admin/users' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBiYW5rLmNvbSIsImlhdCI6MTc1MTcyMTcxNSwiZXhwIjoxNzUxODA4MTE1fQ.WjdrzkUzr6bwS1fVrQb1VDbLPwo6aZGYQWpYevt0_LBT9xFCJeVlIn5AGth_SbrC-7B1wusH-rT-egpQuLWFDw' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "password": "Password123!",
+    "phone": "+1234567890",
+    "dob": "1990-01-01"
+  }'
+
+
+curl -X POST 'http://localhost:8080/api/admin/users' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBiYW5rLmNvbSIsImlhdCI6MTc1MTcyMTcxNSwiZXhwIjoxNzUxODA4MTE1fQ.WjdrzkUzr6bwS1fVrQb1VDbLPwo6aZGYQWpYevt0_LBT9xFCJeVlIn5AGth_SbrC-7B1wusH-rT-egpQuLWFDw' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "firstName": "Jhonn",
+    "lastName": "Doe",
+    "email": "johnn.doe@example.com",
+    "password": "Password123!",
+    "phone": "+1234567899",
+    "dob": "1990-01-04"
+  }'
+
+

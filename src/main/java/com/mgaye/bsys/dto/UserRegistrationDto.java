@@ -7,9 +7,6 @@ import lombok.Data;
 
 @Data
 public class UserRegistrationDto {
-    @NotBlank(message = "Full name is required")
-    @Size(min = 2, max = 100, message = "Full name must be 2-100 characters")
-    private String fullName;
 
     @NotBlank(message = "First name is required")
     @Size(min = 2, max = 100, message = "First name must be 2-100 characters")
@@ -35,6 +32,15 @@ public class UserRegistrationDto {
     @NotBlank(message = "Confirm password is required")
     private String confirmPassword;
 
-    @NotBlank(message = "Dob is required")
-    private LocalDate dob;
+    @NotNull(message = "Date of birth is required") // Changed to @NotNull
+    @Past(message = "Date of birth must be in the past")
+    private LocalDate dob; // Removed @NotBlank
+
+    private boolean active = true;
+    private boolean enable = true;
+
+    @AssertTrue(message = "Passwords must match")
+    private boolean isPasswordsMatch() {
+        return password != null && password.equals(confirmPassword);
+    }
 }
