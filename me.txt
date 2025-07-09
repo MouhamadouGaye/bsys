@@ -11,23 +11,22 @@ curl -X POST 'http://localhost:8080/api/admin/users' \
   }'
 
 
-  curl -X POST 'http://localhost:8080/api/public/login' \
+curl -X POST 'http://localhost:8080/api/public/login' \
   -H 'Content-Type: application/json' \
   -d '{
     "email": "admin@bank.com",
     "password": "SecureAdmin123!"
   }'
 
-
 curl -X POST 'http://localhost:8080/api/admin/users' \
-  -H 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBiYW5rLmNvbSIsImlhdCI6MTc1MTgwNzY3NiwiZXhwIjoxNzUxODk0MDc2fQ.mZUzcb9siP4FcFwQ6mVKpUeiA7ZUXeQmCopx19OMNmOwDXcIQDcWnZZ3YAluMMJPk_H3h8mhVZNdzH76uNQxAQ' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBiYW5rLmNvbSIsImlhdCI6MTc1MTg0MzE0OSwiZXhwIjoxNzUxOTI5NTQ5fQ.wSNfvX9k_fge5lWJ4NIfN_oxQ3dU8Fmb2ZEQthnwulbzEs4pVA5oCvQb3uSsI5GEjPpgPvgDWhJruGs0TTK3Dw' \
   -H 'Content-Type: application/json' \
   -d '{
-    "firstName": "ameth",
+    "firstName": "Nana",
     "lastName": "gaye",
-    "email": "ameth.gaye@example.com",
-    "password": "@Ameth1234",
-    "confirmpassword": "@Ameth1234",
-    "phone": "+1434567999",
-    "dob": "1992-08-09"
+    "email": "nana.gaye@example.com",
+    "password": "@Nana1234",
+    "confirmPassword": "@Nana1234",
+    "phone": "+5664567000",
+    "dob": "1999-10-09"
   }'

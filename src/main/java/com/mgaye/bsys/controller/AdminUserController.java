@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mgaye.bsys.dto.UserRegistrationDto;
+import com.mgaye.bsys.dto.request.RegisterRequest;
 import com.mgaye.bsys.dto.request.UserCreateDto;
+import com.mgaye.bsys.dto.response.UserResponse;
 import com.mgaye.bsys.dto.response.UserResponseDto;
 import com.mgaye.bsys.service.UserService;
 

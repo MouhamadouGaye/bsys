@@ -60,8 +60,9 @@ public class UserResponseDto {
 // "dob":"2000-08-09",
 // "roles":["ROLE_USER"]
 // }
-/// --------------------------------------------------------------------------------
-// THE ONE BELOW String were apply to role
+/// --------------------------------------------------------------------------------|
+// THE ONE BELOW String were apply to
+// roles-----------------------------------------|
 // @Data
 // @NoArgsConstructor
 // @AllArgsConstructor
